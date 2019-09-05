@@ -501,24 +501,21 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
     }
 
     fileprivate var _titleVisible: Bool = false
-        
-    fileprivate var _isErrorState: Bool = false
-
+    
     /*
     *   Set this value to make the title visible
     */
         
-        open func toogleErrorState() {
-            _isErrorState = !_isErrorState
-            
-            if _isErrorState {
-               errorMessage = titleOrPlaceholder
-            } else {
-                errorMessage = ""
-            }
-            
-            updateControl()
+    open func toogleErrorState(error: Bool) {
+        
+        if error {
+            errorMessage = titleOrPlaceholder()
+        } else {
+            errorMessage = ""
         }
+        
+        updateControl()
+    }
         
     open func setTitleVisible(
         _ titleVisible: Bool,
