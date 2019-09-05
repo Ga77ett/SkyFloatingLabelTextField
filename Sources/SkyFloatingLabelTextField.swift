@@ -482,17 +482,13 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
         }
 
         var titleText: String?
-        if hasErrorMessage {
-            titleText = titleFormatter(errorMessage!)
-        } else {
-            if editingOrSelected {
-                titleText = selectedTitleOrTitlePlaceholder()
-                if titleText == nil {
-                    titleText = titleOrPlaceholder()
-                }
-            } else {
+        if editingOrSelected {
+            titleText = selectedTitleOrTitlePlaceholder()
+            if titleText == nil {
                 titleText = titleOrPlaceholder()
             }
+        } else {
+            titleText = titleOrPlaceholder()
         }
         titleLabel.text = titleText
         titleLabel.font = titleFont
