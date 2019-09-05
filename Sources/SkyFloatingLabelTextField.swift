@@ -482,14 +482,19 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
         }
 
         var titleText: String?
-        if editingOrSelected {
-            titleText = selectedTitleOrTitlePlaceholder()
-            if titleText == nil {
-                titleText = titleOrPlaceholder()
+        if hasErrorMessage {
+            titleText = titleFormatter(errorMessage!) {
+                
+            } else {
+                if editingOrSelected {
+                    titleText = selectedTitleOrTitlePlaceholder()
+                    if titleText == nil {
+                        titleText = titleOrPlaceholder()
+                    }
+                } else {
+                    titleText = titleOrPlaceholder()
+                }
             }
-        } else {
-            titleText = titleOrPlaceholder()
-        }
         titleLabel.text = titleText
         titleLabel.font = titleFont
 
@@ -497,10 +502,25 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
     }
 
     fileprivate var _titleVisible: Bool = false
+        
+    fileprivate var _isErrorState: Bool = false
 
     /*
     *   Set this value to make the title visible
     */
+        
+        open func toogleErrorState() {
+            _isErrorState = !_isErrorState
+            
+            if _isErrorState {
+               errorMessage = titleOrPlaceholder
+            } else {
+                errorMessage = ""
+            }
+            
+            updateControl()
+        }
+        
     open func setTitleVisible(
         _ titleVisible: Bool,
         animated: Bool = false,
